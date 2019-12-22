@@ -1,0 +1,73 @@
+<template>
+  <view class="contain">
+    <scroll-view scroll-y style="height: {{catHeight}}px" class="firstlist">
+      <!-- 一级分类 -->
+     <van-sidebar active-key="{{ activeKey }}" bind:change="onChange">
+      <van-sidebar-item wx:for="{{cateList}}" wx:key="index" title="{{item.cat_name}}"/>
+     </van-sidebar>
+    </scroll-view>
+
+     <!-- 二级分类  -->
+     <scroll-view scroll-y style="height:{{catHeight}}px">
+       <block wx:for="{{secondCate}}" wx:key="index">
+         <van-row>
+          <van-col span="24" style="text-align:center">
+           <view>
+            <text class="cate_title">/{{item.cat_name}}/</text>
+           </view>
+          </van-col>
+       </van-row>
+       <!-- 三级分类 -->
+        <van-row>
+          <block wx:for="{{item.children}}" wx:key="index">
+            <view class="inline">
+              <van-col span="8" class="thirdimg"> 
+              <image src="{{item.cat_icon}}" class="thubimg" />
+              <text class="thumbTitle">{{item.cat_name}}</text>
+            </van-col>
+            </view>
+          </block>
+        </van-row>
+       </block>
+     </scroll-view>
+  </view>
+</template>
+ 
+<script>
+import wepy from 'wepy'
+import mix from '../../mixins/tabs/cates.js'
+export default class extends wepy.page {
+  mixins = [mix];
+}
+</script>
+
+<style scope>
+.contain {
+  display: flex;
+}
+.firstlist{
+  width: 85px ;
+}
+.cate_title {
+  font-size: 26rpx;
+  font-weight: 700;
+  display: inline-block;
+  margin: 70rpx 0;
+}
+.thubimg {
+  width: 120rpx;
+  height: 120rpx;
+}
+.thumbTitle {
+  font-size: 24rpx;
+  display: block;
+}
+.inline {
+  display: inline-block;
+  margin:0 auto;
+}
+.thirdimg{
+  text-align: center;
+  padding:12px;
+}
+</style>
